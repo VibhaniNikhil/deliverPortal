@@ -1,0 +1,15 @@
+<?xml version="1.0"?> 
+<Project ToolsVersion="4.0" DefaultTargets="Build" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">    
+    <Import Project="Common.props" />
+    
+    <ItemGroup>
+      <ProjectToBuild Include="$(SolutionFile)">
+        <AdditionalProperties></AdditionalProperties>
+      </ProjectToBuild>
+    </ItemGroup>
+
+    <Target Name="build">
+		    <Message Text="Building $(SolutionFile)" />  
+        <MSBuild Projects="@(ProjectToBuild)" Properties="@(Common)"/>
+    </Target>
+</Project>

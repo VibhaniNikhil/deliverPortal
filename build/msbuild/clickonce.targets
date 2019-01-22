@@ -1,0 +1,120 @@
+<?xml version="1.0" encoding="utf-8"?>
+  <Project ToolsVersion="4.0" DefaultTargets="PublishAllClickOnce" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+      <!-- Find the click once profiles -->
+      <ItemGroup>
+          <ClickOnceProfiles Include="$(MSBuildProjectDirectory)\clickonce.*.props"/>
+      </ItemGroup>
+	
+	    <Target Name="CheckClickOnce" Condition="'$(IsPublishing)' != 'true'" AfterTargets="AfterBuild">
+		    <CallTarget Targets="PublishAllClickOnce" />
+      </Target>
+
+      <!-- Call the publish target foreach profile -->
+      <Target Name="PublishAllClickOnce">
+        <Message Text="Searching for click once application profiles $(MSBuildProjectDirectory)\clickonce.*.props" />
+        <CallTarget Targets="PublishClickOnce" />  
+      </Target>          
+
+      <Target Name="PublishClickOnce" Inputs="@(ClickOnceProfiles)" Outputs="%(Identity).Dummy">
+        <Message Text="Publishing click once application %(ClickOnceProfiles.Identity)" />
+
+        <!-- Set the publish URL to the build output folder -->
+        <PropertyGroup>
+          <PublishUrl>$(BuildOutputPath)\clickonce\$(MSBuildProjectName)</PublishUrl>
+          <PublishDir>$(BuildOutputPath)\clickonce\$(MSBuildProjectName)</PublishDir>
+        </PropertyGroup>
+
+        <!-- call the publish target -->
+        <MSBuild 
+          Projects="$(BuildFolder)\msbuild\clickonce.publish.proj" 
+          Properties="ClickOnceProject=$(MSBuildProjectFullPath);ClickOnceProfile=%(ClickOnceProfiles.Identity);IsPublishing=true;"
+          Targets="Publish"/>
+      </Target>
+      
+      <PropertyGroup Condition="'$(IsPublishing)' == 'true'">
+        <PublishUrl>$(BuildOutputPath)\clickonce\$(MSBuildProjectName)\$(ClickOnceProfileName)\</PublishUrl>
+        <PublishDir>$(BuildOutputPath)\clickonce\$(MSBuildProjectName)\$(ClickOnceProfileName)\</PublishDir>
+      </PropertyGroup>
+
+
+    <!-- <Target Name="Sign">  
+        <Exec Command="signtool.exe sign /f CertFile /p Password "@(FileToSign)" "/>  
+        <SignFile  
+            CertificateThumbprint="$(CertificateThumbprint)"  
+            SigningTarget="@(FileToSign)"   
+            TargetFrameworkVersion="v4.0" />  
+    </Target>   -->
+
+    <!-- <UsingTask TaskName="ConsentPro.Msbuild.SignFileWithPasswordSignFile" AssemblyFile="$(RootFolder)\build\tools\ConsentPro.Msbuild.dll" />
+    <UsingTask TaskName="ConsentPro.Msbuild.ResolveSigningKeyTask" AssemblyFile="$(RootFolder)\build\tools\ConsentPro.Msbuild.dll" /> -->
+
+  <!-- <Target Name="SignFile">  
+        <Exec Command="signtool.exe sign /f CertFile /p Password "@(FileToSign)" "/>  
+        <SignFile  
+            CertificateThumbprint="$(CertificateThumbprint)"  
+            SigningTarget="@(FileToSign)"   
+            TargetFrameworkVersion="v4.0" />  
+    </Target>   -->
+
+
+	  <!-- <Target
+      Name="ResolveKeySource"
+      Condition="$(SignManifests) == 'true' or $(SignAssembly) == 'true'">
+
+      <ResolveSigningKeyTask
+        KeyFile="$(AssemblyOriginatorKeyFile)"
+        CertificateThumbprint="$(ManifestCertificateThumbprint)"
+        CertificateFile="$(ManifestKeyFile)"
+        CertificatePassword="$(ManifestCertificatePassword)"
+        SuppressAutoClosePasswordPrompt="$(BuildingInsideVisualStudio)"
+        ShowImportDialogDespitePreviousFailures="$(BuildingProject)"
+        ContinueOnError="!$(BuildingProject)" >
+
+        <Output TaskParameter="ResolvedKeyFile" PropertyName="KeyOriginatorFile" Condition=" '$(SignAssembly)' == 'true' "/>
+        <Output TaskParameter="ResolvedKeyContainer" PropertyName="KeyContainerName" Condition=" '$(SignAssembly)' == 'true' "/>
+        <Output TaskParameter="ResolvedThumbprint" PropertyName="_DeploymentResolvedManifestCertificateThumbprint" Condition=" '$(SignManifests)' == 'true' "/>
+
+      </ResolveSigningKeyTask>
+
+    </Target>
+
+
+
+  <Target
+      Name="_DeploymentSignClickOnceDeployment">
+
+    <SignFile
+        CertificateThumbprint="$(_DeploymentResolvedManifestCertificateThumbprint)"
+        TimestampUrl="$(ManifestTimestampUrl)"
+        SigningTarget="$(_DeploymentApplicationDir)$(_DeploymentTargetApplicationManifestFileName)"
+        TargetFrameworkVersion="$(TargetFrameworkVersion)"
+        Condition="'$(_DeploymentSignClickOnceManifests)'=='true'" />
+
+    <UpdateManifest
+        ApplicationPath="$(_DeploymentApplicationFolderName)\$(_DeploymentTargetApplicationManifestFileName)"
+        TargetFrameworkVersion="$(TargetFrameworkVersion)"
+        ApplicationManifest="$(_DeploymentApplicationDir)$(_DeploymentTargetApplicationManifestFileName)"
+        InputManifest="$(OutDir)$(TargetDeployManifestFileName)"
+        OutputManifest="$(PublishDir)$(TargetDeployManifestFileName)">
+
+      <Output TaskParameter="OutputManifest" ItemName="PublishedDeployManifest"/>
+
+    </UpdateManifest>
+
+    <SignFile
+        CertificateThumbprint="$(_DeploymentResolvedManifestCertificateThumbprint)"
+        TimestampUrl="$(ManifestTimestampUrl)"
+        SigningTarget="$(PublishDir)$(TargetDeployManifestFileName)"
+        TargetFrameworkVersion="$(TargetFrameworkVersion)"
+        Condition="'$(_DeploymentSignClickOnceManifests)'=='true'" />
+
+    <SignFile
+        CertificateThumbprint="$(_DeploymentResolvedManifestCertificateThumbprint)"
+        TimestampUrl="$(ManifestTimestampUrl)"
+        SigningTarget="$(PublishDir)\setup.exe"
+        Condition="'$(BootstrapperEnabled)'=='true' and '$(_DeploymentSignClickOnceManifests)'=='true'" />
+
+
+  </Target> -->
+
+  </Project>

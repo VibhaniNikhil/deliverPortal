@@ -1,0 +1,13 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <SignAssembly>false</SignAssembly>
+        <DelaySign>true</DelaySign>
+        <GenerateManifests>true</GenerateManifests>
+        <SignManifests>false</SignManifests>
+
+        <!-- TODO: this should not be here and the certificate should not be checked into the tree-->
+        <ManifestKeyFile>$(BuildFolder)\private\consentpro.pfx</ManifestKeyFile>
+        <ManifestCertificateThumbprint>99890CE802ADBA7A143E2DA665AF339A752FAD50</ManifestCertificateThumbprint>
+        <ManifestCertificatePassword>Microsoft1</ManifestCertificatePassword>
+    </PropertyGroup>
+</Project>

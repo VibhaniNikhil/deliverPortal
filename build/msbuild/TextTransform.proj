@@ -1,0 +1,16 @@
+<?xml version="1.0"?> 
+<Project ToolsVersion="4.0" DefaultTargets="TextTransform" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="Common.props" />
+        
+    <ItemGroup>
+      <ProjectToBuild Include="$(TransformProject)">
+        <AdditionalProperties>
+        </AdditionalProperties>
+      </ProjectToBuild>
+    </ItemGroup>
+
+    <Target Name="TextTransform">
+		    <Message Text="Transforming $(TransformProject)" />  
+        <MSBuild Projects="@(ProjectToBuild)" Properties="@(Common)" Targets="TransformAll" />
+    </Target>
+</Project>

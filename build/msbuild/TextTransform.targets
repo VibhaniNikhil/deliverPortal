@@ -1,0 +1,79 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="$(MSBuildExtensionsPath)\Microsoft\VisualStudio\v15.0\TextTemplating\Microsoft.TextTemplating.targets" 
+        Condition="'$(BuildingInsideVisualStudio)' != 'true'" />
+
+    <!-- Some environmental variables need to be expose to T4 to resolve file paths. -->
+	<ItemGroup>  
+    	<T4ParameterValues Include="RootFolder">  
+      		<Value>$(RootFolder)</Value>  
+    	</T4ParameterValues>
+    	<T4ParameterValues Include="SourceFolder">  
+      		<Value>$(SourceFolder)</Value>  
+    	</T4ParameterValues>  		
+    	<T4ParameterValues Include="Configuration">  
+      		<Value>$(Configuration)</Value>  
+    	</T4ParameterValues>  	
+    	<T4ParameterValues Include="ProjectName">  
+      		<Value>$(MSBuildProjectName)</Value>  
+    	</T4ParameterValues>  
+    </ItemGroup>  	
+
+    <!-- -->
+    <Target Name="CheckTextTemplates" 
+        Condition="'$(BuildingInsideVisualStudio)' != 'true' AND '$(IsTransforming)' != 'true'" 
+        DependsOnTargets="SelectItemsForTransformAll" 
+        BeforeTargets="BeforeCompile">
+        <Message Text="Found text templates in $(MSBuildProjectFullPath)" />
+        <CallTarget Targets="TransformAllTemplates" />
+    </Target>
+
+    <Target Name="TransformAllTemplates">
+        <Message Text="Transforming templates in $(MSBuildProjectFullPath)" />
+        
+        <!-- 
+            The task does not return a success error code but still generates the output. 
+            Just ignore for now..
+        -->
+        <MSBuild 
+            ContinueOnError="WarnAndContinue"
+            Projects="$(BuildFolder)\msbuild\TextTransform.proj" 
+            Properties="TransformProject=$(MSBuildProjectFullPath);IsTransforming=true;"
+            Targets="TextTransform"/>
+    </Target>
+
+<!-- process *.tt templates on each build  -->
+
+
+<!-- 
+    <Target Name="OnAfterTransform" Condition="'$(BuildingInsideVisualStudio)' != 'true'">
+        <Message Text="TemplatesToProcess=@(T4TransformInputs)"  />
+        <Message Text="IncludeFolders=$(IncludeFolders)"  />
+        <Message Text="DirectiveProcessors=@(DirectiveProcessor)"  />
+        <Message Text="AssemblyReferences=@(T4AssemblyReference)"  />
+        <Message Text="ReferencePaths=@(T4ReferencePath)"  />
+        <Message Text="TrackerLogDirectory=$(TrackerLogDirectory)"  />
+        <Message Text="TrackFileAccess=$(TrackFileAccess)"  />
+        <Message Text="MinimalRebuildFromTracking=$(TransformOutOfDateOnly)"  />
+        <Message Text="OverwriteReadOnlyOutputFiles=$(OverwriteReadOnlyOutputFiles)"  />
+        <Message Text="ParameterValues=@(T4ParameterValues)"  />
+    </Target> -->
+
+    <!-- <PropertyGroup>
+        <TransformExe>$(BuildFolder)\tools\TextTransform.cmd</TransformExe>
+    </PropertyGroup>
+    
+    <Target Name="TransformOnBuild" AfterTargets="BeforeBuild" Condition="'$(BuildingInsideVisualStudio)' != 'true'">
+        <Message Text="Transforming T4 templates."  />
+        <ItemGroup>
+            <TextTransform Include="@(Content)"
+                            Condition="'%(Content.Generator)' == 'TextTemplatingFilePreprocessor' Or '%(Content.Generator)' == 'TextTemplatingFileGenerator'" />
+        </ItemGroup>
+
+        <Message Text="Found templates @(TextTransform)."  />
+   
+        <Exec Command="&quot;$(TransformExe)&quot; &quot;$(MSBuildProjectDirectory)\@(TextTransform)&quot;"
+            Condition="'%(Identity)' != ''"/>    
+    </Target> -->
+
+</Project>
+

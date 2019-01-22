@@ -1,0 +1,28 @@
+[ignore]
+
+[include]
+
+[libs]
+
+[lints]
+
+[options]
+esproposal.decorators=ignore
+module.name_mapper='^assets' -> '<PROJECT_ROOT>/src/assets'
+module.name_mapper='^actions' -> '<PROJECT_ROOT>/src/actions'
+module.name_mapper='^components' -> '<PROJECT_ROOT>/src/components'
+module.name_mapper='^constants' -> '<PROJECT_ROOT>/src/constants'
+module.name_mapper='^config' -> '<PROJECT_ROOT>/src/config'
+module.name_mapper='^containers' -> '<PROJECT_ROOT>/src/containers'
+module.name_mapper='^localization' -> '<PROJECT_ROOT>/src/localization'
+module.name_mapper='^services' -> '<PROJECT_ROOT>/src/services'
+module.name_mapper='^restClient' -> '<PROJECT_ROOT>/src/services/restClient'
+module.name_mapper='^deliverStatApi' -> '<PROJECT_ROOT>/src/services/deliverStatApi'
+module.name_mapper='^reducers' -> '<PROJECT_ROOT>/src/reducers'
+module.name_mapper='^app' -> '<PROJECT_ROOT>/src/app'
+module.name_mapper='^styles' -> '<PROJECT_ROOT>/src/styles'
+module.name_mapper='^util' -> '<PROJECT_ROOT>/src/util'
+module.name_mapper='^views' -> '<PROJECT_ROOT>/src/views'
+
+
+[strict]

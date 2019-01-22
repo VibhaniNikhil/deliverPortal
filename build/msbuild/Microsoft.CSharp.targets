@@ -1,0 +1,14 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$(BuildFolder)\msbuild\clickonce.targets"  Condition="'$(BuildingInsideVisualStudio)' != 'true'"/>
+	<Import Project="$(BuildFolder)\msbuild\TextTransform.targets"  Condition="'$(BuildingInsideVisualStudio)' != 'true'" />
+
+	<!-- If not building inside visual studio then override output directory -->
+	<PropertyGroup Condition="'$(BuildingInsideVisualStudio)' != 'true'">
+		<UseWPP_CopyWebApplication>True</UseWPP_CopyWebApplication>
+    	<PipelineDependsOnBuild>False</PipelineDependsOnBuild>
+		<WebProjectOutputDir>$(BuildOutputPath)\websites\$(MSBuildProjectName)\</WebProjectOutputDir>
+	</PropertyGroup>
+	
+
+</Project>
+

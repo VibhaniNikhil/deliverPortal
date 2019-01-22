@@ -1,0 +1,12 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+
+	<PropertyGroup>
+		<OutDir>$(BuildOutputPath)\$(MSBuildProjectName)</OutDir>
+		<OutputPath>$(BuildOutputPath)\$(MSBuildProjectName)</OutputPath>
+	</PropertyGroup>
+
+	<PropertyGroup>
+		<RootFolder>$(RootFolder)</RootFolder>
+		<SourceFolder>$(SourceFolder)</SourceFolder>
+	</PropertyGroup>
+</Project>

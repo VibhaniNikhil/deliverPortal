@@ -1,0 +1,17 @@
+<?xml version="1.0"?> 
+<Project ToolsVersion="4.0" DefaultTargets="Publish" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <Import Project="Common.props" />
+        
+    <ItemGroup>
+      <ProjectToBuild Include="$(ClickOnceProject)">
+        <AdditionalProperties>
+        ClickOnceProfile=$(ClickOnceProfile)
+        </AdditionalProperties>
+      </ProjectToBuild>
+    </ItemGroup>
+
+    <Target Name="Publish">
+		    <Message Text="Publishing $(ClickOnceProject)" />  
+        <MSBuild Projects="@(ProjectToBuild)" Properties="@(Common)" Targets="Publish" />
+    </Target>
+</Project>

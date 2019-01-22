@@ -1,0 +1,17 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+    <PropertyGroup>
+        <Install>true</Install>
+        <InstallFrom>Web</InstallFrom>
+        <UpdateEnabled>true</UpdateEnabled>
+        <UpdateMode>Foreground</UpdateMode>
+        <UpdateInterval>7</UpdateInterval>
+        <UpdateIntervalUnits>Days</UpdateIntervalUnits>
+        <UpdatePeriodically>false</UpdatePeriodically>
+        <UpdateRequired>true</UpdateRequired>
+        <MapFileExtensions>true</MapFileExtensions>
+        <PublishWizardCompleted>true</PublishWizardCompleted>
+        <BootstrapperEnabled>true</BootstrapperEnabled>
+        <CreateWebPageOnPublish>true</CreateWebPageOnPublish>
+        <WebPage>publish.htm</WebPage>        
+    </PropertyGroup>
+</Project>

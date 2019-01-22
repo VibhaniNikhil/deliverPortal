@@ -1,0 +1,26 @@
+{
+    "compilerOptions": {
+        "target": "es2017",
+        "experimentalDecorators": true,
+        "allowJs": true,
+        "allowSyntheticDefaultImports": false,
+        "baseUrl": "./",
+        "paths": {
+          "assets/*": ["src/assets/*"],
+          "actions/*": ["src/actions/*"],
+          "components/*": ["src/components/*"],
+          "constants/*": ["src/constants/*"],
+          "configuration/*": ["src/constants/*"],
+          "containers/*": ["src/constants/*"],
+          "localization/*": ["src/constants/*"],
+          "services/*": ["src/constants/*"],
+          "restClient/*": ["src/services/restClient/*"],
+          "deliverStatApi/*": ["src/services/DeliverStatApi/*"],
+          "styles/*": ["src/styles/*"],
+          "util/*": ["src/util/*"],
+          "views/*": ["src/views/*"],
+          "app/*": ["src/app/*"]
+        }
+    },
+    "exclude": ["node_modules", "dist"]
+}

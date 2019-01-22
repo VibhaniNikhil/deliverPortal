@@ -1,0 +1,11 @@
+<Project ToolsVersion="4.0" xmlns="http://schemas.microsoft.com/developer/msbuild/2003">
+	<Import Project="$(BuildFolder)\msbuild\clickonce.common.props" Condition="'$(IsPublishing)' == 'true'"/>
+    <Import Project="$(BuildFolder)\msbuild\clickonce.signing.props" Condition="'$(IsPublishing)' == 'true'"/>
+    <Import Project="$(ClickOnceProfile)" Condition="'$(IsPublishing)' == 'true'"/>
+
+	<PropertyGroup Condition="'$(BuildingInsideVisualStudio)' != 'true'">
+        <OutDir>$(BuildOutputPath)\$(MSBuildProjectName)\</OutDir>
+		<OutputPath>$(BuildOutputPath)\$(MSBuildProjectName)\</OutputPath>
+		<IntermediateOutputPath>$(BuildOutputPath)\obj\$(MSBuildProjectName)\</IntermediateOutputPath>
+	</PropertyGroup>	        
+</Project>

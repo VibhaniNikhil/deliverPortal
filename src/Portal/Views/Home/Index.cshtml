@@ -1,0 +1,16 @@
+@{
+    ViewData["Title"] = "Home Page";
+}
+
+@*<div id="react-app" asp-prerender-module="ClientApp/dist/main-server">Loading...</div>*@
+<div id="app-site">
+    <div class="loader">
+        <svg class="circular" viewBox="25 25 50 50">
+            <circle class="path" cx="50" cy="50" r="20" fill="none" stroke-width="2" stroke-miterlimit="10" />
+        </svg>
+    </div>
+</div>
+
+@section scripts {
+    <script src="~/dist/main-client.js" asp-append-version="true"></script>
+}
